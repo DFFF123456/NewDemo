@@ -1,0 +1,13 @@
+.lists{
+  margin:10px 0 0 40px;
+  width:800px;
+  background-color:skyblue;
+}
+.logo{
+  width:256px;
+  height:256px;
+  border-radius:50%;
+}
+.site-layout-content{
+  display:flex;
+}
