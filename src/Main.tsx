@@ -1,9 +1,9 @@
 import { Avatar, Badge, Layout } from 'antd'
 import {UserOutlined } from '@ant-design/icons';
 import axios from 'axios';
-
+import { useParams} from "react-router-dom";
 import { Input } from 'antd';
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import './CSS/Main.css'
 import Lists from './Lists';
 import Information from './Information';
@@ -15,6 +15,8 @@ interface Props{
 }
 
 const Main: React.FC<Props> = (props: Props) => {
+  let params = useParams();
+  const username = params.username;
   const [dataSources, setDataSources] = useState([])
   const [inf,setInf]=useState([])
   const onSearch = (e) => {
@@ -47,8 +49,10 @@ const Main: React.FC<Props> = (props: Props) => {
       defaultValue="mojombo"
       style={{width:"400px",marginTop:"12px"}}
     />
-     <span style={{marginLeft:"0px",position:"absolute",right:"50px"}}>
+    <span style={{ marginLeft: "0px", position: "absolute", right: "50px" }}>
+    <p style={{fontSize:"16px",color:"white",marginRight:"10px",display:"inline-block"}}>Welcome!  { username }</p>
       <Badge dot>
+        
         <Avatar shape="circle" icon={<UserOutlined />} />
       </Badge>
     </span>

@@ -1,6 +1,10 @@
 .main{
-  background-color: red;
-  margin: 0 auto;
-  width: 400px;
-  height: 400px;
+  background-color: white;
+  margin: 100px auto;
+  width: 550px;
+  height: 250px;
+  padding-top: 30px;
+}
+body{
+  background-color:#F0F2F5;
 }
