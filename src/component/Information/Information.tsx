@@ -1,6 +1,6 @@
 import { Image } from 'antd';
 import React from 'react';
-import './CSS/Information.css'
+import '../../CSS/Information.css'
 interface Props{
   dataSource:any,
 }

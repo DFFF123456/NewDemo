@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useParams} from "react-router-dom";
-import Tables from './Tables';
+import Tables from '../Tables/Tables';
 const Detail = () => {
   const [dataSources,setDataSources]=useState([])
   let params = useParams();

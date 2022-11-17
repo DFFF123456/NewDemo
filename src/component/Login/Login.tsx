@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Button, Checkbox, Form, Input } from 'antd';
 import { useNavigate } from "react-router-dom";
-import './CSS/Login.css'
+import '../../CSS/Login.css'
 const Login = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();

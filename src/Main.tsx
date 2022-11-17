@@ -5,8 +5,8 @@ import { useParams ,useNavigate} from "react-router-dom";
 import { Input, Image } from 'antd';
 import React, { useEffect, useState } from 'react'
 import './CSS/Main.css'
-import Lists from './Lists';
-import Information from './Information';
+import Lists from './component/Lists/Lists';
+import Information from './component/Information/Information';
 const { Search } = Input;
 const { Header, Content, Footer } = Layout;
 
@@ -27,6 +27,7 @@ const Main: React.FC<Props> = (props: Props) => {
       const url1 = 'https://api.github.com/users/' + e + '/repos'
       axios.get(url1).then(res => {
         message.success('success');
+        console.log(res.data)
         setDataSources(res.data)
       }).catch((err) => {
         if (err.message === 'Request failed with status code 404') {
@@ -50,14 +51,8 @@ const Main: React.FC<Props> = (props: Props) => {
     axios.get(url3).then(res => {
       setSrc(res.data[0].owner.avatar_url)
     }).catch(err => console.log(err))
+  }, [username])
 
-    axios.get('https://api.github.com/users/mojombo/repos').then(res => {
-      setDataSources(res.data)
-    })
-    }, [username])
-      axios.get('https://api.github.com/users/mojombo/subscriptions').then(res => {
-        setInf(res.data[0].owner)
-      })
   return (
     <>
       <Layout className="layout" >
