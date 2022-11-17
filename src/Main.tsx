@@ -1,5 +1,7 @@
-import { Avatar, Badge, Layout, message,Button  } from 'antd'
-
+import { Avatar, Badge, Layout, message  } from 'antd'
+import {
+  ApiOutlined
+} from '@ant-design/icons';
 import axios from 'axios';
 import { useParams ,useNavigate} from "react-router-dom";
 import { Input, Image } from 'antd';
@@ -32,7 +34,7 @@ const Main: React.FC<Props> = (props: Props) => {
       }).catch((err) => {
         if (err.message === 'Request failed with status code 404') {
           message.error('This is an error username', 3);
-        }
+        }else
         message.error('Limit requests', 3);
       })
       const url2 = 'https://api.github.com/users/' + e + '/subscriptions'
@@ -43,14 +45,16 @@ const Main: React.FC<Props> = (props: Props) => {
   }
   const quit = () => {
     sessionStorage.removeItem('token');
+    sessionStorage.removeItem('username')
+    message.success('success quit');
     navigate('/Login');//跳转到主页
   }
-
   useEffect(() => {
     const url3 = 'https://api.github.com/users/' + username + '/repos'
     axios.get(url3).then(res => {
       setSrc(res.data[0].owner.avatar_url)
     }).catch(err => console.log(err))
+    sessionStorage.setItem('username',username)
   }, [username])
 
   return (
@@ -67,10 +71,11 @@ const Main: React.FC<Props> = (props: Props) => {
             style={{ maxWidth: "400px", marginTop: "12px", minWidth: "200px" }}
           />
           <span style={{ marginLeft: "0px", position: "absolute", right: "50px" }}>
-            <p style={{ fontSize: "16px", color: "white", marginRight: "10px", display: "inline-block" }}>Welcome!  {username}</p>
+            <p style={{ fontSize: "16px", color: "white", marginRight: "54px", display: "inline-block" }}>Welcome!  {username}</p>
+            <ApiOutlined style={{backgroundColor:"white",fontSize:"32px",borderRadius:"50%", position: "absolute", top: "19px" ,right:"40px"}} onClick={()=>quit()} />
             <Badge dot className="logo">
               <Avatar shape="circle" src={<Image src={src} style={{ width: 32 }} />} />
-              <Button type="primary" className="primary" onClick={()=>quit()} style={{width:"80px"}}> 注销</Button>
+  
             </Badge>
           </span>
           

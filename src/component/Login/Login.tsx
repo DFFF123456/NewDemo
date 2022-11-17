@@ -1,19 +1,18 @@
 import React from 'react'
 
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input ,message} from 'antd';
 import { useNavigate } from "react-router-dom";
 import '../../CSS/Login.css'
 const Login = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const onFinish = (values: any) => {
-    // console.log(values.username);
     sessionStorage.setItem('token','12345678987654321')
     const url = '/' + values.username;
+    message.success(' success login');
     navigate(url);//跳转到主页
   };
   const onReset = () => {
-    console.log(666)
     form.resetFields();
   };
   const onFinishFailed = (errorInfo: any) => {
@@ -26,11 +25,11 @@ const Login = () => {
       name="basic"
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 11 }}
-      initialValues={{ remember: true ,username:"DFFF123456"}}
+      initialValues={{ remember: true}}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
-      
+      form={form}
     >
       <Form.Item 
         label="Username"
@@ -45,7 +44,7 @@ const Login = () => {
         name="password"
         rules={[{ required: true, message: 'Please input your password!' }]}
       >
-        <Input.Password />
+      <Input.Password />
       </Form.Item>
 
       <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
@@ -58,8 +57,9 @@ const Login = () => {
         </Button>
         <Button type="primary" htmlType="button" style={{marginLeft:"10px"}} onClick={onReset}>
           Reset
-        </Button>
-      </Form.Item>
+            </Button>
+          </Form.Item>
+          
     </Form>
       
 
