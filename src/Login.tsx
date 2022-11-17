@@ -6,7 +6,8 @@ import './CSS/Login.css'
 const Login = () => {
   const navigate = useNavigate();
   const onFinish = (values: any) => {
-    console.log(values.username);
+    // console.log(values.username);
+    sessionStorage.setItem('token','12345678987654321')
     const url = '/' + values.username;
     navigate(url);//跳转到主页
   };
