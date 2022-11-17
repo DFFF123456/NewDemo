@@ -1,13 +1,34 @@
 .lists{
   margin:10px 0 0 40px;
-  width:800px;
+  width: 800px;
+  max-width:800px;
+  min-width: 500px;
   background-color:skyblue;
 }
-.logo{
-  width:256px;
-  height:256px;
-  border-radius:50%;
+/* .logo:hover{
+  display:inline-block;
+} */
+.logo::before{
+
+  z-index:99;
+  position: absolute;
+  right:5px;
+  top:23px;
+  content:'';
+  border-top:11px solid transparent;
+  border-right:11px solid transparent;
+  border-bottom:11px solid #F0F2F5;
+  border-left:11px solid transparent;
 }
+
+.primary{
+  position: absolute;
+  right:-20px;
+  top:45px;
+}
+
+
 .site-layout-content{
   display:flex;
 }
+

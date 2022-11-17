@@ -5,21 +5,22 @@ interface Props{
   dataSource:any,
 }
 const Information = ({ dataSource }: Props) => {
-  console.log(dataSource)
+
   let url = ''
   let dis = 'none'
   let name=''
-  if (dataSource.owner) {
-    url = dataSource.owner.avatar_url
+  if (dataSource.length!==0) {
+    url = dataSource.avatar_url
     dis = ''
-    name=dataSource.owner.login
+    name=dataSource.login
   }
+  // className={url===''?'logo':''}
   return (
     <>
-      <Image className="logo" style={{display:dis}}
+      <Image style={{display:dis}}  className="bigLogo"
         width={256}
         height={256}
-        src={url    }
+        src={url}
       />
       <p>
         {name}

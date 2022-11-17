@@ -4,6 +4,7 @@ import { Button, Checkbox, Form, Input } from 'antd';
 import { useNavigate } from "react-router-dom";
 import './CSS/Login.css'
 const Login = () => {
+  const [form] = Form.useForm();
   const navigate = useNavigate();
   const onFinish = (values: any) => {
     // console.log(values.username);
@@ -11,7 +12,10 @@ const Login = () => {
     const url = '/' + values.username;
     navigate(url);//跳转到主页
   };
-
+  const onReset = () => {
+    console.log(666)
+    form.resetFields();
+  };
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
@@ -22,7 +26,7 @@ const Login = () => {
       name="basic"
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 11 }}
-      initialValues={{ remember: true }}
+      initialValues={{ remember: true ,username:"DFFF123456"}}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
@@ -51,6 +55,9 @@ const Login = () => {
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
         <Button type="primary" htmlType="submit" >
           Submit
+        </Button>
+        <Button type="primary" htmlType="button" style={{marginLeft:"10px"}} onClick={onReset}>
+          Reset
         </Button>
       </Form.Item>
     </Form>

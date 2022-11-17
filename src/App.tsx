@@ -10,10 +10,10 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/:username" element={<GradRoute><Main/></GradRoute>} />
-          <Route path="/" element={<Login/>} />
-          <Route path="/Login" element={<Login/>} />
-          <Route path="/Detail/:username/:name" element={<GradRoute><Detail/></GradRoute>} />
+          <Route path="/:username" element={<GradRoute><Main /></GradRoute>} />
+          <Route path="/" element={<Login />} />
+          <Route path="/Login" element={<Login />} />
+          <Route path="/Detail/:username/:name" element={<GradRoute><Detail /></GradRoute>} />
         </Routes>
       </BrowserRouter>
     </>

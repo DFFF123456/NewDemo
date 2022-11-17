@@ -16,10 +16,8 @@ interface Props{
   dataSources:any,
 }
 const Lists: React.FC<Props> = ({ dataSources }) => {
-  console.log(dataSources)
-  
+
   dayjs.extend(relativeTime)
-  console.log(dayjs("2021-04-03T10:15:42Z").fromNow())
   const data = Array.from(dataSources).map((item: any) => ({
     id:item.id,
     name: item.name,
@@ -49,13 +47,14 @@ const Lists: React.FC<Props> = ({ dataSources }) => {
       <List.Item
         key={item.id}
         actions={[
-          <IconText icon={StarOutlined} text={item.watchers}  />,
+          
+          <IconText icon={StarOutlined } text={item.watchers}     />,
           <IconText icon={PartitionOutlined} text={item.forks}  />,
           <IconText icon={FolderAddOutlined}  text={item.updated_at} />,
           <IconText icon={TeamOutlined} text={item.private?'public':'private'} />,
         ]}
         extra={
-        <button>123</button>
+        <button>收藏</button>
         }
       >
         <List.Item.Meta
