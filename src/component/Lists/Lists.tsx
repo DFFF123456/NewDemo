@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { TeamOutlined, PartitionOutlined, GithubOutlined,StarOutlined,FolderAddOutlined } from '@ant-design/icons';
-import { List, Space } from 'antd';
+import { List, Space,Button, Drawer  } from 'antd';
 import {  Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime'
+import Item from 'antd/lib/list/Item';
+import RightDrawer from '../RightDrawer/RightDrawer';
+import axios from 'axios';
 
 
 const IconText = ({ icon, text }: { icon: React.FC; text: string }) => (
@@ -16,6 +19,31 @@ interface Props{
   dataSources:any,
 }
 const Lists: React.FC<Props> = ({ dataSources }) => {
+  console.log(dataSources)
+ 
+  const [open, setOpen] = useState(false);
+  const [Inf, setInf] = useState([]);
+  const showDrawer = (e) => {
+    console.log(1)
+    const username = dataSources[0].owner.login;
+    const name =e.target.textContent;
+    const url2 = 'https://api.github.com/repos/' + username+'/'+name + '/subscribers'
+    console.log(url2)
+    axios.get(url2).then(res => {
+      console.log(res.data)
+      setInf(res.data)
+    }).catch(err => console.log(err))
+    setOpen(true);
+
+    console.log(Inf)
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
+
+
+
 
   dayjs.extend(relativeTime)
   const data = Array.from(dataSources).map((item: any) => ({
@@ -43,18 +71,22 @@ const Lists: React.FC<Props> = ({ dataSources }) => {
       <div>
       </div>
     }
-    renderItem={item => (
+        renderItem={item => (
       <List.Item
         key={item.id}
         actions={[
-          
           <IconText icon={StarOutlined } text={item.watchers}     />,
           <IconText icon={PartitionOutlined} text={item.forks}  />,
           <IconText icon={FolderAddOutlined}  text={item.updated_at} />,
           <IconText icon={TeamOutlined} text={item.private?'public':'private'} />,
         ]}
         extra={
-        <button>收藏</button>
+          <>
+           
+            <Button type="primary" onClick={showDrawer}>
+            {item.name}
+        </Button>
+          </>
         }
       >
         <List.Item.Meta
@@ -64,7 +96,23 @@ const Lists: React.FC<Props> = ({ dataSources }) => {
         />
       </List.Item>
     )}
-  />
+      />
+      {/* <RightDrawer /> */}
+         <Drawer
+        title="Basic Drawer"
+        placement="right"
+        closable={false}
+        onClose={onClose}
+        open={open}
+        getContainer={false}
+      >
+        <p>
+         
+          {/* Inf.map((item)=({
+            <p>{ item.login}</p>
+          })) */}
+        </p>
+      </Drawer>
     </>
   )
 }

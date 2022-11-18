@@ -37,7 +37,7 @@ const Main: React.FC<Props> = (props: Props) => {
         }else
         message.error('Limit requests', 3);
       })
-      const url2 = 'https://api.github.com/users/' + e + '/subscriptions'
+      const url2 = 'https://api.github.com/users/' + e + '/repos'
       axios.get(url2).then(res => {
         setInf(res.data[0].owner)
       }).catch(err => console.log(err))
@@ -75,7 +75,6 @@ const Main: React.FC<Props> = (props: Props) => {
             <ApiOutlined style={{backgroundColor:"white",fontSize:"32px",borderRadius:"50%", position: "absolute", top: "19px" ,right:"40px"}} onClick={()=>quit()} />
             <Badge dot className="logo">
               <Avatar shape="circle" src={<Image src={src} style={{ width: 32 }} />} />
-  
             </Badge>
           </span>
           
