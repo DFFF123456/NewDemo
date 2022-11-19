@@ -18,7 +18,7 @@ const RightDrawer = () => {
       <Drawer
         title="Basic Drawer"
         placement="right"
-        closable={true}
+        // closable={true}
         onClose={onClose}
         open={open}
         getContainer={false}

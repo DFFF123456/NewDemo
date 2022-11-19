@@ -26,10 +26,11 @@ const Main: React.FC<Props> = (props: Props) => {
   const [src, setSrc] = useState('')
   const onSearch = (e) => {
     if (e) {
+      sessionStorage.setItem('searchName', e);
       const url1 = 'https://api.github.com/users/' + e + '/repos'
       axios.get(url1).then(res => {
         message.success('success');
-        console.log(res.data)
+        setInf(res.data[0].owner)
         setDataSources(res.data)
       }).catch((err) => {
         if (err.message === 'Request failed with status code 404') {
@@ -37,19 +38,26 @@ const Main: React.FC<Props> = (props: Props) => {
         }else
         message.error('Limit requests', 3);
       })
-      const url2 = 'https://api.github.com/users/' + e + '/repos'
-      axios.get(url2).then(res => {
-        setInf(res.data[0].owner)
-      }).catch(err => console.log(err))
     }
   }
   const quit = () => {
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('username')
+    sessionStorage.removeItem('searchName')
     message.success('success quit');
     navigate('/Login');//跳转到主页
   }
   useEffect(() => {
+    const searchName = sessionStorage.getItem('searchName');
+    console.log(searchName);
+    if (searchName) {
+      const searchUrl = 'https://api.github.com/users/' + searchName + '/repos';
+      axios.get(searchUrl).then(res => {
+        setInf(res.data[0].owner)
+        setDataSources(res.data)
+      }).catch(err => console.log(err))
+    }
+    
     const url3 = 'https://api.github.com/users/' + username + '/repos'
     axios.get(url3).then(res => {
       setSrc(res.data[0].owner.avatar_url)

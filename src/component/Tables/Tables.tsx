@@ -31,24 +31,14 @@ const columns: ColumnsType<DataType> = [
 ];
 
 const Tables = (props: Props) => {
-  const params = useParams();
-  const navigate = useNavigate();
-  console.log(params.username)
-  const goBack = () => {
-    let username = sessionStorage.getItem('username');
-    console.log(username)
-    let url='/'+username+''
-     navigate(url);
-  }
   return (
     <>
       <div className="table">
         <Table columns={columns} dataSource={props.dataSources} />
       </div>
-      <div className="right">
+      {/* <div className="right">
         2
-      </div>
-      <Button type="primary" style={{position: 'absolute',right: '20px'}} onClick={goBack}>Back</Button>
+      </div> */}
     </>
   )
 }
