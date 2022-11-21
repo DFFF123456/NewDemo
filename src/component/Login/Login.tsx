@@ -1,22 +1,23 @@
 import React from 'react'
-
 import { Button, Checkbox, Form, Input ,message} from 'antd';
 import { useNavigate } from "react-router-dom";
 import '../../CSS/Login.css'
+
 const Login = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const onFinish = (values: any) => {
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('username')
+    sessionStorage.removeItem('searchName')
     sessionStorage.setItem('token','12345678987654321')
     const url = '/' + values.username;
     message.success(' success login');
     navigate(url);//跳转到主页
   };
+  //表单清空
   const onReset = () => {
     form.resetFields();
-  };
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
   };
   return (
     <>
@@ -27,7 +28,6 @@ const Login = () => {
       wrapperCol={{ span: 11 }}
       initialValues={{ remember: true}}
       onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
       autoComplete="off"
       form={form}
     >
@@ -58,11 +58,8 @@ const Login = () => {
         <Button type="primary" htmlType="button" style={{marginLeft:"10px"}} onClick={onReset}>
           Reset
             </Button>
-          </Form.Item>
-          
+          </Form.Item> 
     </Form>
-      
-
       </div>
     </>
     

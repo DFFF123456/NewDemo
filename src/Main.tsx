@@ -1,14 +1,14 @@
-import { Avatar, Badge, Layout, message  } from 'antd'
-import {
-  ApiOutlined
-} from '@ant-design/icons';
+import React, { useEffect, useState } from 'react'
+import { Avatar, Badge, Layout, message, Input, Image } from 'antd'
+import { PoweroffOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { useParams ,useNavigate} from "react-router-dom";
-import { Input, Image } from 'antd';
-import React, { useEffect, useState } from 'react'
+
+
 import './CSS/Main.css'
 import Lists from './component/Lists/Lists';
 import Information from './component/Information/Information';
+
 const { Search } = Input;
 const { Header, Content, Footer } = Layout;
 
@@ -17,20 +17,20 @@ interface Props {
 }
 
 const Main: React.FC<Props> = (props: Props) => {
-  let params = useParams();
-
-  const username = params.username;
+  const params = useParams();
   const navigate = useNavigate();
-  const [dataSources, setDataSources] = useState([])
-  const [inf, setInf] = useState([])
-  const [src, setSrc] = useState('')
-  const onSearch = (e) => {
+  const username = params.username;//登录者的名字
+  
+
+  const [dataSources, setDataSources] = useState([])//搜索的人名称，用于渲染数据
+  const [inf, setInf] = useState([])//搜索的人名称，用于渲染个人信息
+  const [loginUrl, setLoginUrl] = useState('')
+  const onSearch = (e):void => {
     if (e) {
       sessionStorage.setItem('searchName', e);
-      const url1 = 'https://api.github.com/users/' + e + '/repos'
-      axios.get(url1).then(res => {
+      const searchUrl = 'https://api.github.com/users/' + e + '/repos'
+      axios.get(searchUrl).then(res => {
         message.success('success');
-        setInf(res.data[0].owner)
         setDataSources(res.data)
       }).catch((err) => {
         if (err.message === 'Request failed with status code 404') {
@@ -38,8 +38,15 @@ const Main: React.FC<Props> = (props: Props) => {
         }else
         message.error('Limit requests', 3);
       })
+
+      const infUrl = 'https://api.github.com/users/' + e;
+      console.log(infUrl)
+      axios.get(infUrl).then(res => {
+        setInf(res.data)
+      }).catch(err => console.log(err))
     }
   }
+  //注销
   const quit = () => {
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('username')
@@ -47,20 +54,27 @@ const Main: React.FC<Props> = (props: Props) => {
     message.success('success quit');
     navigate('/Login');//跳转到主页
   }
+
   useEffect(() => {
     const searchName = sessionStorage.getItem('searchName');
-    console.log(searchName);
     if (searchName) {
       const searchUrl = 'https://api.github.com/users/' + searchName + '/repos';
       axios.get(searchUrl).then(res => {
-        setInf(res.data[0].owner)
         setDataSources(res.data)
+      }).catch(err => console.log(err))
+
+      const infUrl = 'https://api.github.com/users/' + searchName;
+      // const infUrl='https://api.github.com/users/mojombo'
+      console.log(infUrl)
+      axios.get(infUrl).then(res => {
+        setInf(res.data)
       }).catch(err => console.log(err))
     }
     
-    const url3 = 'https://api.github.com/users/' + username + '/repos'
-    axios.get(url3).then(res => {
-      setSrc(res.data[0].owner.avatar_url)
+    //获取登录者的信息
+    const loginUrl = 'https://api.github.com/users/' + username + '/repos'
+    axios.get(loginUrl).then(res => {
+      setLoginUrl(res.data[0].owner.avatar_url)
     }).catch(err => console.log(err))
     sessionStorage.setItem('username',username)
   }, [username])
@@ -80,14 +94,13 @@ const Main: React.FC<Props> = (props: Props) => {
           />
           <span style={{ marginLeft: "0px", position: "absolute", right: "50px" }}>
             <p style={{ fontSize: "16px", color: "white", marginRight: "54px", display: "inline-block" }}>Welcome!  {username}</p>
-            <ApiOutlined style={{backgroundColor:"white",fontSize:"32px",borderRadius:"50%", position: "absolute", top: "19px" ,right:"40px"}} onClick={()=>quit()} />
+            <PoweroffOutlined style={{color:"red",fontSize:"16px",borderRadius:"50%", position: "absolute", top: "28px" ,right:"40px"}} onClick={()=>quit()} />
             <Badge dot className="logo">
-              <Avatar shape="circle" src={<Image src={src} style={{ width: 32 }} />} />
+              <Avatar shape="circle" src={<Image src={loginUrl} style={{ width: 32 }} />} />
             </Badge>
           </span>
-          
-         
         </Header>
+
         <Content
           style={{
             padding: '0 50px',
@@ -103,13 +116,6 @@ const Main: React.FC<Props> = (props: Props) => {
             </div>
           </div>
         </Content>
-        <Footer
-          style={{
-            textAlign: 'center',
-          }}
-        >
-          Design ©2022 Created by York
-        </Footer>
       </Layout>
     </>
   )

@@ -1,12 +1,54 @@
-
-p{
-  text-align:center;
-  font-size:34px;
-  font-weight:bold;
+.main2{
+  width: 300px;
+  height: 600px;
+  /* background-color: skyblue; */
+  /* display: flex; */
+  /* flex-direction: column;; */
 }
 .bigLogo{
-  width: 256px;
-  height: 256px;
+  margin:  auto;
+  width: 300px;
+  height: 300px;
   border-radius:50%;
+}
+.realName{
+  margin-top: 5px;
+  font-size:24px;
+  line-height: 1.25;
+}
+.loginName{
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 24px;
+  color: var(--color-fg-muted);
+  display: block !important;
+
+}
+.inf ul{
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+.inf ul li{
+  margin-top: 4px !important;
+  /* padding-left:2px; */
+}
+
+
+.inf ul li p{
+  float:left;
+  margin-right:8px;
+  margin-bottom:0px;
+}
+
+.inf ul li span{
+  font-size: 14px;
+}
+
+.inf ul li .firstSpan{
+  font-weight:700;
   
 }
+

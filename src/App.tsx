@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
+
 import Detail from './component/Detail/Detail';
 import Login from './component/Login/Login';
 import Main from './Main'
