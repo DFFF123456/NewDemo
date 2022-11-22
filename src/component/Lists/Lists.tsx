@@ -5,6 +5,7 @@ import {  Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime'
 import axios from 'axios';
+import '../../CSS/Lists.css'
 
 
 const IconText = ({ icon, text }: { icon: React.FC; text: string }) => (
@@ -80,7 +81,7 @@ const Lists: React.FC<Props> = ({ dataSources }) => {
         {/* 每个列表的内容 */}
         <List.Item.Meta
           avatar={<GithubOutlined />}
-          title={<Link to={item.url}>{item.name}</Link>}//跳转路由，到某个项目的详细页
+          title={<Link to={item.url} className="link">{item.name}</Link>}//跳转路由，到某个项目的详细页
           description={item.description}
         />
       </List.Item>

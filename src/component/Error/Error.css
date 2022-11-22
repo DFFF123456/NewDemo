@@ -1,0 +1,32 @@
+.body{
+  position: absolute;
+  top:40%;
+  left:50%;
+  transform: translate(-50% ,-50%);
+  /* background-color: red; */
+}
+.title{
+  font-size: 1.25em;
+}
+.title-text{
+  font-weight: 300;
+  line-height: 1.2;
+  padding-top: 0;
+}
+.error-head{
+  font-weight: 600;
+}
+ul{
+  list-style: disc;
+  margin: 1em 0;
+  padding: 0;
+  margin-inline-start: 2em;
+}
+ul li{
+  margin-bottom: .5em;
+}
+.button{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: end;
+}

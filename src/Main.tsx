@@ -25,6 +25,7 @@ const Main: React.FC<Props> = (props: Props) => {
   const [dataSources, setDataSources] = useState([])//搜索的人名称，用于渲染数据
   const [inf, setInf] = useState([])//搜索的人名称，用于渲染个人信息
   const [loginUrl, setLoginUrl] = useState('')
+  //搜索
   const onSearch = (e):void => {
     if (e) {
       sessionStorage.setItem('searchName', e);
@@ -54,9 +55,9 @@ const Main: React.FC<Props> = (props: Props) => {
     message.success('success quit');
     navigate('/Login');//跳转到主页
   }
-
+  const searchName = sessionStorage.getItem('searchName');
   useEffect(() => {
-    const searchName = sessionStorage.getItem('searchName');
+   
     if (searchName) {
       const searchUrl = 'https://api.github.com/users/' + searchName + '/repos';
       axios.get(searchUrl).then(res => {
@@ -77,7 +78,7 @@ const Main: React.FC<Props> = (props: Props) => {
       setLoginUrl(res.data[0].owner.avatar_url)
     }).catch(err => console.log(err))
     sessionStorage.setItem('username',username)
-  }, [username])
+  }, [username,searchName])
 
   return (
     <>
