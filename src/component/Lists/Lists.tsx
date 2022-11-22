@@ -72,7 +72,7 @@ const Lists: React.FC<Props> = ({ dataSources }) => {
         ]}
         extra={
           <>
-          <Button type="primary" onClick={()=>showDrawer(item.name,item.language)} style={{maxWidth:"65px",overflow: "hidden"}}>
+          <Button type="primary" onClick={()=>showDrawer(item.name,item.language)} style={{maxWidth:"65px",overflow: "hidden",lineHeight:"100%",marginTop:"50%"}}>
               More
           </Button>
           </>

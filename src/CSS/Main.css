@@ -8,19 +8,65 @@
 /* .logo:hover{
   display:inline-block;
 } */
-.logo::before{
-
+.buttons::before{
   z-index:99;
   position: absolute;
   right:5px;
-  top:23px;
+  top:-22px;
   content:'';
   border-top:11px solid transparent;
   border-right:11px solid transparent;
-  border-bottom:11px solid #F0F2F5;
+  border-bottom:11px solid #fff;
+  /* border-bottom:11px solid #F0F2F5; */
   border-left:11px solid transparent;
 }
-
+.buttons{
+  box-shadow: 0 8px 24px rgba(140,149,159,0.2);
+  border:1px solid #d0d7de;
+  border-radius:10px;
+  z-index:99;
+  position: absolute;
+  right:-41px;
+  top:64px;
+  width: 170px;
+  height: 300px;
+  background-color: #fff;
+}
+.buttons .title {
+  line-height:100%;
+  padding:4px 8px 0px 16px; 
+}
+.buttons .title span{
+  margin-top:8px;
+  margin-bottom:3px;
+  display:inline-block;
+}
+.buttons .title strong{
+  font-size:16px;
+  margin-top:5px;
+  padding-bottom:0px;
+}
+.buttons ul{
+  margin:0;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  list-style:none;
+  line-height:100%;
+  /* justify-content */
+}
+.buttons ul li{
+  flex:1;
+  /* background-color: pink; */
+  font-size: 14px;
+  line-height: 2;
+  padding:0px 8px 0px 16px; 
+  height:30px;
+}
+.buttons ul li:hover{
+  background-color: #0969da;
+  cursor: pointer;
+}
 .primary{
   position: absolute;
   right:-20px;

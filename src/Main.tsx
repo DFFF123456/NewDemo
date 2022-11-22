@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Avatar, Badge, Layout, message, Input, Image } from 'antd'
-import { PoweroffOutlined } from '@ant-design/icons';
+import { Avatar, Badge, Layout, message, Input, Image ,Divider} from 'antd'
+import { MoreOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { useParams ,useNavigate} from "react-router-dom";
 
@@ -10,7 +10,7 @@ import Lists from './component/Lists/Lists';
 import Information from './component/Information/Information';
 
 const { Search } = Input;
-const { Header, Content, Footer } = Layout;
+const { Header, Content} = Layout;
 
 interface Props {
   children?: any,
@@ -20,8 +20,8 @@ const Main: React.FC<Props> = (props: Props) => {
   const params = useParams();
   const navigate = useNavigate();
   const username = params.username;//登录者的名字
-  
-
+ 
+  const [show,setShow] = useState(false);//显示退出功能
   const [dataSources, setDataSources] = useState([])//搜索的人名称，用于渲染数据
   const [inf, setInf] = useState([])//搜索的人名称，用于渲染个人信息
   const [loginUrl, setLoginUrl] = useState('')
@@ -46,6 +46,9 @@ const Main: React.FC<Props> = (props: Props) => {
         setInf(res.data)
       }).catch(err => console.log(err))
     }
+  }
+  const changeShow = () => {
+    setShow(!show)
   }
   //注销
   const quit = () => {
@@ -93,12 +96,24 @@ const Main: React.FC<Props> = (props: Props) => {
             defaultValue="mojombo"
             style={{ maxWidth: "400px", marginTop: "12px", minWidth: "200px" }}
           />
-          <span style={{ marginLeft: "0px", position: "absolute", right: "50px" }}>
-            <p style={{ fontSize: "16px", color: "white", marginRight: "54px", display: "inline-block" }}>Welcome!  {username}</p>
-            <PoweroffOutlined style={{color:"red",fontSize:"16px",borderRadius:"50%", position: "absolute", top: "28px" ,right:"40px"}} onClick={()=>quit()} />
-            <Badge dot className="logo">
+          <span style={{ marginLeft: "0px", position: "absolute", right: "70px" }}>
+            <p style={{ fontSize: "16px", color: "white", marginRight: "20px", display: "inline-block" }}>Welcome!  {username}</p>
+            <Badge dot >
               <Avatar shape="circle" src={<Image src={loginUrl} style={{ width: 32 }} />} />
             </Badge>
+            <MoreOutlined  onClick={changeShow}  style={{color:"white",fontSize:"32px",position: "absolute", top: "20px" ,right:"-40px"}} />
+            <div className="buttons" style={{display:show?'inline-block':'none'}}>
+              <div className="title">
+                <span>Signed in as</span>
+                <strong>{username}</strong>
+              </div>
+              <Divider style={{marginTop:"8px",marginBottom:"10px"}} />
+              <ul>
+                <li>
+                  <div onClick={()=>quit()}>Sign out</div>
+                </li>
+              </ul>
+            </div>
           </span>
         </Header>
 
