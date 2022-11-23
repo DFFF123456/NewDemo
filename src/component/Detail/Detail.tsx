@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,memo } from 'react'
 import { useNavigate, useParams} from "react-router-dom";
 import axios from 'axios';
 import { Button } from 'antd';
 import Tables from '../Tables/Tables';
 
-const Detail = () => {
+const Detail = memo(() => {
   const params = useParams();
   const navigate = useNavigate();
   let [dataSources,setDataSources]=useState([])
@@ -18,21 +18,19 @@ const Detail = () => {
     }).catch(err => console.log(err))
   }, [DetailUrl])
 
-  console.log(dataSources)
   //回退
-  const goBack = () => {
+  const goBack = ():void => {
     let username = sessionStorage.getItem('username');
     let url='/'+username+''
     navigate(url);
   }
-
   return (
     <>
-      <Tables dataSources={dataSources} >
+      <Tables dataSources={dataSources}  key={Math.random()}>
       </Tables>
       <Button type="primary" style={{position: 'absolute',right: '20px'}} onClick={goBack}>Back</Button>
     </>
   )
-}
+})
 
 export default Detail

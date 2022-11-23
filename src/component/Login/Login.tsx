@@ -1,15 +1,19 @@
 import React from 'react'
 import { Button, Checkbox, Form, Input ,message} from 'antd';
 import { useNavigate } from "react-router-dom";
-import '../../CSS/Login.css'
+import './Login.css'
 
+interface values{
+  username: String,
+  password: String,
+  
+}
 const Login = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
-  const onFinish = (values: any) => {
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('username')
-    sessionStorage.removeItem('searchName')
+  //登录
+  const onFinish = (values: values) => {
+    sessionStorage.clear()
     sessionStorage.setItem('token','12345678987654321')
     const url = '/' + values.username;
     message.success(' success login');
@@ -57,8 +61,8 @@ const Login = () => {
         </Button>
         <Button type="primary" htmlType="button" style={{marginLeft:"10px"}} onClick={onReset}>
           Reset
-            </Button>
-          </Form.Item> 
+        </Button>
+      </Form.Item> 
     </Form>
       </div>
     </>

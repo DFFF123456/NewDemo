@@ -1,13 +1,12 @@
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import React from 'react';
-import '../../CSS/Tables.css'
+import './Tables.css'
 
 interface DataType {
   name: string;
   type: string;
   address: string;
-  // href: string;
 }
 
 interface Props{
@@ -15,11 +14,7 @@ interface Props{
   dataSources:any,
 }
 
-
-
-
 const Tables = (props: Props) => {
-
   const columns: ColumnsType<DataType> = [
     {
       title: 'Name',
@@ -33,7 +28,6 @@ const Tables = (props: Props) => {
     {
       title: 'Address',
       dataIndex: 'html_url',
-      // render: text => <a href={{html_url}}>{text}</a>,
     },
   ];
   return (

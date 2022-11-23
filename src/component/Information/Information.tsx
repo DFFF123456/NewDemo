@@ -1,12 +1,12 @@
 import { Image ,Divider} from 'antd';
-import React from 'react';
+import { memo } from 'react';
 import { EnvironmentOutlined, LinkOutlined ,BankOutlined} from '@ant-design/icons';
-import '../../CSS/Information.css'
+import './Information.css'
 interface Props{
   dataSource:any,
 }
-const Information = ({ dataSource }: Props) => {
-  console.log(dataSource)
+const Information = memo(({ dataSource }: Props) => {
+  console.log('Information')
   const data = {
     url : '',
     dis : 'none',
@@ -41,8 +41,8 @@ const Information = ({ dataSource }: Props) => {
         {data.login}
         </span>
       </h1>
-      <Divider />
-      <div className="inf" style={{display:data.dis}} >
+      <Divider style={{display:data.dis, backgroundColor: "rgba(27,31,36,0.15)" }}/>
+      <div className="inf" style={{display:'data.dis'}} >
         <ul>
           <li style={{display:data.company?'':'none'}}>
             <p className="firstP"><BankOutlined /></p>
@@ -56,11 +56,13 @@ const Information = ({ dataSource }: Props) => {
             <p><LinkOutlined /></p>
             <span>{data.blog}</span>
           </li>
-        
+          <Divider style={{ display: data.dis, backgroundColor: "rgba(27,31,36,0.15)" }} />
+          
         </ul>
       </div>
     </div>
   )
-}
+})
+
 
 export default Information

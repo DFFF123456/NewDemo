@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import { TeamOutlined, PartitionOutlined, GithubOutlined,StarOutlined,FolderAddOutlined } from '@ant-design/icons';
 import { List, Space,Button, Drawer, Divider  } from 'antd';
-import {  Link } from 'react-router-dom';
+import {  NavLink } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime'
 import axios from 'axios';
-import '../../CSS/Lists.css'
+import './Lists.css'
 
 
 const IconText = ({ icon, text }: { icon: React.FC; text: string }) => (
@@ -14,28 +14,31 @@ const IconText = ({ icon, text }: { icon: React.FC; text: string }) => (
     {text}
   </Space>
 );
+
 interface Props{
   dataSources:any,
 }
-const Lists: React.FC<Props> = ({ dataSources }) => {
+
+const Lists: React.FC<Props> = memo(({ dataSources }) => {
+  console.log('Lists')
   dayjs.extend(relativeTime)
   const [open, setOpen] = useState(false);//判断抽屉是否打开
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState('');//某个项目的标题，放在抽屉中
   const [Inf, setInf] = useState([]);//某个项目的贡献者信息，放在抽屉中
   const [language, setLanguage] = useState('');//某个项目的语言，放在抽屉中
 
-  const showDrawer = (projectName, language) => {//展开抽屉
-  const searchName = dataSources[0].owner.login;//查询者的信息
-  setLanguage(language)
-  setTitle(projectName) //项目名称
-  const projectUrl = 'https://api.github.com/repos/' + searchName + '/' + projectName + '/subscribers' //某个项目的具体内容路径
-  axios.get(projectUrl).then(res => {
-      setInf(res.data)
+  const showDrawer = (projectName:string, language:string):void => {//展开抽屉
+    const searchName = dataSources[0].owner.login;//查询者的信息
+    setLanguage(language)
+    setTitle(projectName) //项目名称
+    const projectUrl = 'https://api.github.com/repos/' + searchName + '/' + projectName + '/subscribers' //某个项目的具体内容路径
+    axios.get(projectUrl).then(res => {
+        setInf(res.data)
     }).catch(err => console.log(err))
     setOpen(true);
   };
 
-  const onClose = () => {
+  const onClose = ():void => {
     setOpen(false);
   };
 
@@ -80,15 +83,15 @@ const Lists: React.FC<Props> = ({ dataSources }) => {
         >
         {/* 每个列表的内容 */}
         <List.Item.Meta
-          avatar={<GithubOutlined />}
-          title={<Link to={item.url} className="link">{item.name}</Link>}//跳转路由，到某个项目的详细页
+          avatar={<GithubOutlined />} 
+          title={<NavLink to={item.url} className="link">{item.name}</NavLink>}
           description={item.description}
         />
       </List.Item>
     )}
       />
       <Drawer
-        style={{height:"800px"}}
+        style={{ height: "860px" }}
         title={title}
         placement="right"
         closable={true}
@@ -96,13 +99,14 @@ const Lists: React.FC<Props> = ({ dataSources }) => {
         size={'large'}
         open={open}
         getContainer={false}
+        key={Math.random()}
       >
        <span style={{fontWeight:"700px",marginRight:"10px",fontSize:"20px",verticalAlign:"top"}}>Contribute:</span>
         {
           Inf.map((item, i) => {
             return (
               <>
-              <img src={item.avatar_url} alt='error' style={{width:"32px",height:"32px",borderRadius:"50%",display:"inline-block"}}></img>
+                <img key={i} src={item.avatar_url} alt='error' style={{width:"32px",height:"32px",borderRadius:"50%",display:"inline-block"}}></img>
               </>
            )
           })
@@ -113,6 +117,6 @@ const Lists: React.FC<Props> = ({ dataSources }) => {
       </Drawer>
     </>
   )
-}
+})
 
 export default Lists

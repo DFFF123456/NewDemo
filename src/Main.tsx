@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { Avatar, Badge, Layout, message, Input, Image ,Divider} from 'antd'
+import React, { useEffect, useState, useCallback  } from 'react'
+import { useParams ,useNavigate } from "react-router-dom";
+import { Avatar, Badge, Layout, message, Input, Image, Divider } from 'antd';
 import { MoreOutlined } from '@ant-design/icons';
 import axios from 'axios';
-import { useParams ,useNavigate} from "react-router-dom";
 
 
 import './CSS/Main.css'
@@ -13,7 +13,7 @@ const { Search } = Input;
 const { Header, Content} = Layout;
 
 interface Props {
-  children?: any,
+  children?: Object,
 }
 
 const Main: React.FC<Props> = (props: Props) => {
@@ -26,12 +26,13 @@ const Main: React.FC<Props> = (props: Props) => {
   const [inf, setInf] = useState([])//搜索的人名称，用于渲染个人信息
   const [loginUrl, setLoginUrl] = useState('')
   //搜索
-  const onSearch = (e):void => {
+  const onSearch = (e:string): void => {
+    console.log(e)
     if (e) {
       sessionStorage.setItem('searchName', e);
       const searchUrl = 'https://api.github.com/users/' + e + '/repos'
       axios.get(searchUrl).then(res => {
-        message.success('success');
+        message.success('success search');
         setDataSources(res.data)
       }).catch((err) => {
         if (err.message === 'Request failed with status code 404') {
@@ -39,28 +40,24 @@ const Main: React.FC<Props> = (props: Props) => {
         }else
         message.error('Limit requests', 3);
       })
-
+      
       const infUrl = 'https://api.github.com/users/' + e;
-      console.log(infUrl)
       axios.get(infUrl).then(res => {
         setInf(res.data)
       }).catch(err => console.log(err))
     }
   }
-  const changeShow = () => {
+  const changeShow = useCallback((show:boolean) :void=> {
     setShow(!show)
-  }
+  },[])
   //注销
-  const quit = () => {
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('username')
-    sessionStorage.removeItem('searchName')
+  const quit = ():void => {
+    sessionStorage.clear();
     message.success('success quit');
     navigate('/Login');//跳转到主页
   }
   const searchName = sessionStorage.getItem('searchName');
   useEffect(() => {
-   
     if (searchName) {
       const searchUrl = 'https://api.github.com/users/' + searchName + '/repos';
       axios.get(searchUrl).then(res => {
@@ -68,8 +65,6 @@ const Main: React.FC<Props> = (props: Props) => {
       }).catch(err => console.log(err))
 
       const infUrl = 'https://api.github.com/users/' + searchName;
-      // const infUrl='https://api.github.com/users/mojombo'
-      console.log(infUrl)
       axios.get(infUrl).then(res => {
         setInf(res.data)
       }).catch(err => console.log(err))
@@ -101,11 +96,11 @@ const Main: React.FC<Props> = (props: Props) => {
             <Badge dot >
               <Avatar shape="circle" src={<Image src={loginUrl} style={{ width: 32 }} />} />
             </Badge>
-            <MoreOutlined  onClick={changeShow}  style={{color:"white",fontSize:"32px",position: "absolute", top: "20px" ,right:"-40px"}} />
+            <MoreOutlined  onClick={()=>changeShow(show)}  style={{color:"white",fontSize:"32px",position: "absolute", top: "20px" ,right:"-40px"}} />
             <div className="buttons" style={{display:show?'inline-block':'none'}}>
               <div className="title">
-                <span>Signed in as</span>
-                <strong>{username}</strong>
+                <span style={{display:"block"}}> Signed in as </span>
+                <strong>{ username }</strong>
               </div>
               <Divider style={{marginTop:"8px",marginBottom:"10px"}} />
               <ul>
